@@ -1,0 +1,204 @@
+.interrupteur {
+  --interrupteur-curseur: calc(var(--interrupteur-hauteur) - 2 * var(--interrupteur-pas));
+  --interrupteur-course: calc(var(--interrupteur-largeur) - var(--interrupteur-hauteur));
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: var(--interrupteur-largeur);
+  height: var(--interrupteur-hauteur);
+  cursor: pointer;
+}
+
+.interrupteur input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.interrupteur .piste {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--bouton-contour);
+  border-radius: 999px;
+  background: var(--surface-forte);
+  transition: background-color calc(var(--duree-desactivation) - var(--delai-desactivation)) ease var(--delai-desactivation), border-color calc(var(--duree-desactivation) - var(--delai-desactivation)) ease var(--delai-desactivation);
+}
+
+.interrupteur input:checked ~ .piste {
+  background: var(--accent-piste);
+  border-color: var(--accent);
+  transition-duration: calc(var(--duree-activation) - var(--delai-activation));
+  transition-delay: var(--delai-activation);
+}
+
+.interrupteur input:focus-visible ~ .piste {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.interrupteur input:disabled ~ .piste {
+  opacity: 0.5;
+}
+
+.interrupteur .curseur {
+  position: absolute;
+  top: calc(var(--interrupteur-pas) - 1px);
+  left: calc(var(--interrupteur-pas) - 1px);
+  width: var(--interrupteur-curseur);
+  height: var(--interrupteur-curseur);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--texte);
+  color: var(--nuit);
+  font-size: calc(var(--interrupteur-curseur) * 0.55);
+  transform: translateX(0);
+  transition: transform calc(var(--duree-desactivation) - var(--delai-desactivation)) var(--ressort) var(--delai-desactivation);
+}
+
+.interrupteur input:checked ~ .piste .curseur {
+  transform: translateX(var(--interrupteur-course));
+  transition-duration: calc(var(--duree-activation) - var(--delai-activation));
+  transition-delay: var(--delai-activation);
+}
+
+.interrupteur .curseur .icone {
+  grid-area: 1 / 1;
+  transition: opacity var(--duree-mouvement-reduit) ease;
+}
+
+.interrupteur .cadenas-ferme,
+.interrupteur input:checked ~ .piste .cadenas-ouvert {
+  opacity: 0;
+}
+
+.interrupteur input:checked ~ .piste .cadenas-ferme {
+  opacity: 1;
+}
+
+.interrupteur .onde {
+  position: absolute;
+  top: 50%;
+  left: calc(100% - var(--interrupteur-hauteur) / 2);
+  width: var(--interrupteur-hauteur);
+  height: var(--interrupteur-hauteur);
+  margin: calc(var(--interrupteur-hauteur) / -2) 0 0 calc(var(--interrupteur-hauteur) / -2);
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.interrupteur .points {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 4px);
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.interrupteur .points i {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--texte);
+  opacity: 0;
+}
+
+.interrupteur .points i:nth-child(1) { left: -14px; }
+.interrupteur .points i:nth-child(2) { left: -6px; }
+.interrupteur .points i:nth-child(3) { left: 2px; }
+.interrupteur .points i:nth-child(4) { left: 10px; }
+
+.interrupteur.activation .piste .curseur {
+  animation: appui var(--duree-activation) linear;
+}
+
+.interrupteur.activation .onde {
+  animation: onde var(--duree-activation) ease-out;
+}
+
+.interrupteur.desactivation .points i {
+  animation: dissolution var(--duree-desactivation) ease-out backwards;
+}
+
+.interrupteur.desactivation .points i:nth-child(2) { animation-delay: 20ms; }
+.interrupteur.desactivation .points i:nth-child(3) { animation-delay: 40ms; }
+.interrupteur.desactivation .points i:nth-child(4) { animation-delay: 60ms; }
+
+.interrupteur.desactivation .piste .curseur {
+  animation: rebond var(--duree-desactivation) linear;
+}
+
+@keyframes appui {
+  0% { scale: 1; }
+  17% { scale: 1.14 0.92; }
+  42% { scale: 1.08; }
+  71% { scale: 0.96; }
+  100% { scale: 1; }
+}
+
+@keyframes onde {
+  0% { opacity: 0; transform: scale(0.6); }
+  17% { opacity: 0; transform: scale(0.7); }
+  42% { opacity: 0.7; transform: scale(1); }
+  71% { opacity: 0.3; transform: scale(1.3); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+@keyframes dissolution {
+  0% { opacity: 1; transform: translateY(0); }
+  25% { opacity: 0.85; transform: translateY(-3px) scale(0.9); }
+  50% { opacity: 0.45; transform: translateY(-7px) scale(0.7); }
+  75% { opacity: 0.15; transform: translateY(-10px) scale(0.5); }
+  100% { opacity: 0; transform: translateY(-12px) scale(0.3); }
+}
+
+@keyframes rebond {
+  0% { scale: 1; }
+  25% { scale: 0.92; }
+  50% { scale: 1.06; }
+  75% { scale: 0.98; }
+  100% { scale: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interrupteur .piste,
+  .interrupteur input:checked ~ .piste,
+  .interrupteur .curseur,
+  .interrupteur input:checked ~ .piste .curseur,
+  .interrupteur .curseur .icone {
+    transition-property: background-color, border-color, opacity;
+    transition-duration: var(--duree-mouvement-reduit);
+    transition-timing-function: ease;
+    transition-delay: 0s;
+  }
+
+  .interrupteur .curseur,
+  .interrupteur input:checked ~ .piste .curseur {
+    transition-property: none;
+  }
+
+  .interrupteur.activation .piste .curseur,
+  .interrupteur.activation .onde,
+  .interrupteur.desactivation .points i,
+  .interrupteur.desactivation .piste .curseur {
+    animation: none;
+  }
+}
+
+.interrupteur.simple {
+  --interrupteur-largeur: 40px;
+  --interrupteur-hauteur: 22px;
+}
+
+.interrupteur.simple .onde {
+  display: none;
+}

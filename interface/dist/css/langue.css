@@ -1,0 +1,130 @@
+.langue .carte-langue,
+.langue .carte-elements {
+  position: absolute;
+  left: var(--marge);
+  right: var(--marge);
+}
+
+.langue .carte-langue {
+  top: var(--ecran-barre-haut);
+  height: 119px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 var(--marge-interne);
+}
+
+.langue .badge-langue-grand {
+  flex: none;
+  width: 64px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--texte);
+  border-radius: var(--rayon-champ);
+  font-size: var(--taille-sous-titre);
+  font-weight: 600;
+}
+
+.langue .langue-texte {
+  flex: 1;
+  min-width: 0;
+}
+
+.langue .langue-titre {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.langue .langue-etat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  color: var(--texte-2);
+  font-size: var(--taille-moyen);
+}
+
+.langue .langue-etat .icone {
+  color: var(--accent);
+  font-size: var(--taille-fort);
+}
+
+.langue .langue-etat .icone.alerte {
+  color: var(--erreur);
+}
+
+.langue .carte-langue .bouton {
+  width: 240px;
+  font-size: var(--taille-moyen);
+}
+
+.langue .carte-elements {
+  top: 345px;
+  bottom: var(--ecran-bas);
+  display: flex;
+  flex-direction: column;
+  padding: 15px var(--marge-interne) 40px;
+}
+
+.langue .carte-elements > h2 {
+  flex: none;
+}
+
+.langue .elements {
+  margin: 5px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--contour);
+}
+
+.langue .element {
+  display: grid;
+  grid-template-columns: 48px 1fr auto auto;
+  align-items: center;
+  height: 63px;
+}
+
+.langue .element + .element {
+  border-top: 1px solid var(--contour);
+}
+
+.langue .icone-element {
+  font-size: var(--icone);
+  width: 26px;
+  height: 26px;
+  color: var(--texte-2);
+}
+
+.langue .element-texte {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: var(--taille-moyen);
+}
+
+.langue .element-texte .secondaire {
+  font-size: var(--taille-petit);
+}
+
+.langue .valeur-locale {
+  margin-right: 20px;
+  font-size: var(--taille-fort);
+  font-weight: 600;
+}
+
+.langue .pastille-etat {
+  min-width: 112px;
+}
+
+.langue .pied-langue {
+  position: absolute;
+  left: var(--marge-interne);
+  bottom: 12px;
+  font-size: var(--taille-petit);
+  color: var(--texte-2);
+}
+
+.langue .carte-elements > .message-liste {
+  padding: 16px 0;
+}

@@ -1,0 +1,260 @@
+.jouer .dock {
+  position: absolute;
+  left: var(--marge);
+  right: var(--marge);
+  bottom: 56px;
+  height: 104px;
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.jouer .dock-section {
+  position: relative;
+  flex: none;
+  width: 216px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-left: 23px;
+  border-left: 1px solid var(--contour);
+}
+
+.jouer .dock-section:first-child {
+  border-left: 0;
+}
+
+.jouer.plusieurs .dock-section:first-child {
+  width: 240px;
+}
+
+.jouer.plusieurs .dock-section:nth-child(2) {
+  width: 168px;
+}
+
+.jouer .dock-section > .icone {
+  font-size: var(--icone);
+  color: var(--texte-2);
+}
+
+.jouer .dock-section .etiquette {
+  font-size: var(--taille-petit);
+  color: var(--texte-2);
+}
+
+.jouer .dock-section .valeur {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: var(--taille-fort);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.jouer .dock-section .detail {
+  position: absolute;
+  left: 56px;
+  top: 47px;
+  font-size: var(--taille-note);
+  color: var(--texte-2);
+}
+
+.jouer .dock-section .valeur .badge {
+  font-weight: 500;
+}
+
+.jouer .dock-section .valeur .icone {
+  color: var(--texte-2);
+  font-size: var(--taille-sous-titre);
+}
+
+.jouer .badge-langue {
+  width: 27px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--texte-2);
+  border-radius: 5px;
+  color: var(--texte-2);
+  font-size: var(--taille-note);
+  font-weight: 600;
+}
+
+.jouer .selection {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-weight: 600;
+  font-size: var(--taille-fort);
+}
+
+.jouer .selection .icone {
+  color: var(--texte-2);
+  font-size: var(--taille-moyen);
+}
+
+.jouer .action {
+  margin-left: auto;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.jouer .bouton-jouer {
+  width: 100%;
+  height: 64px;
+  font-size: var(--taille-jouer);
+  letter-spacing: 0.06em;
+  border-radius: var(--rayon-bouton);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.jouer.plusieurs .bouton-jouer {
+  height: 52px;
+}
+
+.jouer .bouton-jouer .icone {
+  font-size: var(--taille-moyen);
+}
+
+.jouer .bouton-jouer:disabled {
+  opacity: 1;
+  background: var(--surface);
+  border-color: var(--contour);
+  color: var(--texte-2);
+}
+
+.jouer .bouton-jouer:disabled .point {
+  width: 6px;
+  height: 6px;
+  background: var(--texte-2);
+}
+
+.jouer .legende {
+  font-size: var(--taille-note);
+  color: var(--texte-2);
+}
+
+.jouer .suivi {
+  position: absolute;
+  right: var(--marge);
+  bottom: 177px;
+  width: 440px;
+  padding: 16px 24px 4px;
+}
+
+.jouer .suivi-tete {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--contour);
+}
+
+.jouer .suivi-tete h2 {
+  font-size: var(--taille-sous-titre);
+  font-weight: 500;
+}
+
+.jouer .suivi-tete span {
+  font-size: var(--taille-petit);
+  color: var(--texte-2);
+}
+
+.jouer .suivi-ligne {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 0;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--contour);
+  font-size: var(--taille-moyen);
+  font-weight: 500;
+}
+
+.jouer .suivi-ligne:last-child {
+  border-bottom: 0;
+}
+
+.jouer .suivi-ligne.avec-barre {
+  padding: 9px 0;
+}
+
+.jouer .suivi-ligne .progression {
+  grid-column: 2 / 4;
+  margin-top: 2px;
+}
+
+.jouer .suivi-ligne .zone-nom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.jouer .suivi-ligne .lien {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: var(--taille-petit);
+  font-weight: 600;
+}
+
+.jouer .suivi-ligne.lancable {
+  border: none;
+  border-bottom: 1px solid var(--contour);
+  border-radius: var(--rayon-champ);
+  background: none;
+  font: inherit;
+  font-size: var(--taille-moyen);
+  font-weight: 500;
+  color: inherit;
+  text-align: left;
+  width: 100%;
+  padding: 11px 0;
+}
+
+.jouer .suivi-ligne.lancable:last-child {
+  border-bottom: 0;
+}
+
+.jouer .suivi-ligne.lancable:hover,
+.jouer .suivi-ligne.lancable:focus-visible {
+  background: var(--surface-forte);
+}
+
+.jouer .suivi-ligne .icone-suivi-lancer {
+  width: 20px;
+  height: 20px;
+  color: var(--texte-2);
+}
+
+.jouer .suivi-ligne.lancable:hover .icone-suivi-lancer,
+.jouer .suivi-ligne.lancable:focus-visible .icone-suivi-lancer {
+  color: var(--accent);
+}
+
+.jouer .menu-selection {
+  position: absolute;
+  left: 340px;
+  bottom: 168px;
+  min-width: 220px;
+  padding: 8px 4px;
+  background: var(--panneau-fort);
+}
+
+.jouer .menu-selection label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  font-size: var(--taille-moyen);
+}

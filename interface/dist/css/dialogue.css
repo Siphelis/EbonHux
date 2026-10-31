@@ -1,0 +1,107 @@
+.dialogue-fond {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 8, 14, 0.55);
+}
+
+.dialogue {
+  width: 440px;
+  max-height: calc(100% - 48px);
+  overflow-y: auto;
+  padding: 28px;
+  border: 1px solid var(--contour);
+  border-radius: var(--rayon-carte);
+  position: relative;
+  background: transparent;
+  box-shadow: var(--ombre-carte);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dialogue-tete {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dialogue-tete .avatar {
+  width: 40px;
+  height: 40px;
+  font-size: var(--taille-fort);
+}
+
+.dialogue-tete .icone-titre {
+  width: 28px;
+  display: grid;
+  place-items: center;
+  font-size: var(--taille-titre);
+  color: var(--texte-2);
+}
+
+.dialogue h2 {
+  font-size: var(--taille-sous-titre);
+  font-weight: 600;
+}
+
+.dialogue .sous-titre {
+  margin-top: 4px;
+  font-size: var(--taille-petit);
+  color: var(--texte-2);
+}
+
+.dialogue .texte {
+  font-size: var(--taille-moyen);
+  line-height: 1.6;
+}
+
+.dialogue .note .point {
+  margin-top: 5px;
+}
+
+.dialogue .ligne-interrupteur {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dialogue .ligne-interrupteur .libelle {
+  font-size: var(--taille-moyen);
+  font-weight: 500;
+}
+
+.dialogue .ligne-interrupteur .aide {
+  margin-top: 2px;
+  font-size: var(--taille-petit);
+  color: var(--texte-2);
+}
+
+.dialogue .groupe {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dialogue .groupe + .groupe {
+  padding-top: 12px;
+  border-top: 1px solid var(--contour);
+}
+
+.dialogue .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.dialogue .actions .bouton {
+  min-width: 120px;
+  height: 44px;
+}
+
+.dialogue .actions .bouton:last-child {
+  min-width: 168px;
+}

@@ -1,0 +1,46 @@
+[package]
+name = "ebonhux-coque"
+version = "0.0.0"
+edition = "2024"
+description = "Coque Tauri d'EbonHux : fenêtre native autour de l'interface statique"
+publish = false
+
+# La coque est sa propre racine : elle n'est pas membre de l'espace de travail d'App/.
+[workspace]
+
+[build-dependencies]
+tauri-build = { version = "2", default-features = false , features = [] }
+
+# `ebonhux` (ligne de commande) existe déjà dans un autre projet cargo : le binaire de la coque a son propre nom.
+[[bin]]
+name = "ebonhux-launcher"
+path = "src/main.rs"
+
+[dependencies]
+ebonhux-service = { path = "../../crates/service" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# `image-png` : la fenêtre reçoit l'icône d'`icons/icon.png` (sinon le bureau montre une icône générique).
+tauri = { version = "2", default-features = false, features = ["wry", "image-png"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-single-instance = "2"
+
+[dev-dependencies]
+ebonhux-coeur = { path = "../../crates/coeur" }
+tempfile = "3"
+
+# Profil léger : la machine du propriétaire sature sous Rust.
+[profile.dev]
+debug = false
+incremental = true
+
+[profile.dev.package."*"]
+debug = false
+
+# Binaire de livraison : compilation légère (la machine du propriétaire sature sous Rust).
+# `panic` reste `unwind` : la coque rattrape les paniques du service.
+[profile.release]
+lto = false
+codegen-units = 16
+strip = true
+opt-level = 2

@@ -1,0 +1,15 @@
+[workspace]
+resolver = "3"
+members = ["crates/coeur", "crates/cli", "crates/service"]
+exclude = ["interface"]
+
+[workspace.package]
+edition = "2024"
+version = "0.0.0"
+
+# Cible plus petite : seules les lignes de code du projet gardent leurs informations de débogage.
+[profile.dev]
+debug = "line-tables-only"
+
+[profile.dev.package."*"]
+debug = false

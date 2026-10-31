@@ -1,0 +1,17 @@
+[package]
+name = "ebonhux-cli"
+edition.workspace = true
+version.workspace = true
+
+[[bin]]
+name = "ebonhux"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+ebonhux-coeur = { path = "../coeur" }
+serde_json = "1"
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+tempfile = "3"

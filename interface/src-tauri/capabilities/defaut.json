@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "defaut",
+  "description": "Capacité minimale de la fenêtre principale",
+  "windows": ["principale"],
+  "permissions": ["core:default", "dialog:allow-open"]
+}

@@ -1,0 +1,190 @@
+.preparation {
+  --etape-ecart: 20px;
+  --numero-taille: 34px;
+  --prete-hauteur: 72px;
+}
+
+.preparation .contenu {
+  position: absolute;
+  left: var(--marge);
+  right: var(--marge);
+  top: var(--ecran-barre-haut);
+  display: flex;
+  flex-direction: column;
+  gap: var(--etape-ecart);
+}
+
+.preparation .etapes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--etape-ecart);
+}
+
+.preparation .etape {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 292px;
+  padding: var(--marge-interne);
+}
+
+.preparation .etape header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.preparation .numero {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--numero-taille);
+  height: var(--numero-taille);
+  border: 1.5px solid var(--texte-2);
+  border-radius: 50%;
+  color: var(--texte-2);
+  font-size: var(--taille-fort);
+  font-weight: 600;
+}
+
+.preparation .etape[data-etat="fait"] .numero {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--nuit);
+}
+
+.preparation .etape[data-etat="a_faire"] .numero {
+  border-color: var(--texte);
+  color: var(--texte);
+}
+
+.preparation .etape[data-etat="bloque"] {
+  opacity: 0.8;
+}
+
+.preparation .detail {
+  min-height: 1em;
+  color: var(--texte-2);
+  font-size: var(--taille-petit);
+  overflow-wrap: anywhere;
+}
+
+.preparation .detail:empty {
+  display: none;
+}
+
+.preparation .corps {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  width: 100%;
+}
+
+.preparation .texte {
+  font-size: var(--taille-texte);
+  line-height: 1.45;
+}
+
+.preparation .boutons {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.preparation .boutons .bouton {
+  flex: 1;
+}
+
+.preparation .erreur-champ {
+  color: var(--erreur);
+  font-size: var(--taille-petit);
+}
+
+.preparation .champ-saisie input[aria-invalid] {
+  border-color: var(--erreur);
+}
+
+.preparation .etat-logiciels {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--taille-texte);
+  font-weight: 600;
+}
+
+.preparation .etat-logiciels.fait::before {
+  content: "✓";
+  color: var(--accent);
+}
+
+.preparation .alerte-note {
+  color: var(--erreur);
+  font-size: var(--taille-texte);
+  line-height: 1.45;
+}
+
+.preparation .etapes-installation {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: var(--taille-petit);
+}
+
+.preparation .etapes-installation li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.preparation .etapes-installation .marque {
+  color: var(--accent);
+}
+
+.preparation .occupation {
+  color: var(--accent);
+  font-size: var(--taille-texte);
+}
+
+.preparation .prete {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: var(--prete-hauteur);
+  padding: 0 var(--marge-interne);
+}
+
+.preparation .coche-grande {
+  display: grid;
+  place-items: center;
+  width: var(--numero-taille);
+  height: var(--numero-taille);
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--nuit);
+  font-weight: 700;
+}
+
+.preparation .prete-texte {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--texte-2);
+  font-size: var(--taille-texte);
+}
+
+.preparation .prete-texte strong {
+  color: var(--texte);
+  font-size: var(--taille-sous-titre);
+}
+
+.preparation .prete .bouton {
+  min-width: 220px;
+  border-color: var(--accent);
+}

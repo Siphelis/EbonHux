@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=EbonHux
+Comment=Lanceur de World of Warcraft pour Linux : comptes, addons et préparation du jeu
+Exec=@EXEC@
+Icon=@ICON@
+Terminal=false
+Categories=Game;
+StartupWMClass=ebonhux-launcher

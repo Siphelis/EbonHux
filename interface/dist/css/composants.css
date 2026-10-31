@@ -1,0 +1,507 @@
+.carte {
+  position: relative;
+  border: 1px solid var(--contour);
+  border-radius: var(--rayon-carte);
+  background: transparent;
+  box-shadow: var(--ombre-carte);
+}
+
+/* Verre sans backdrop-filter (inopérant sur WebKitGTK + NVIDIA) : une couche
+   derrière le contenu recopie le fond de la fenêtre, alignée sur la position
+   de l'élément (variables --verre-x/--verre-y posées par js/verre.js), puis
+   utilise une copie DÉJÀ FLOUTÉE de fond.webp (img/fond-flou-*.webp, bords
+   étendus, 600x338, rayon = flou x 1200/1208.9 pour la fenêtre 1100x680) ;
+   clip-path la ramène aux bords de l'élément. L'image se choisit par
+   --image-flou (carte 12px, pastille 8px, fort 20px). */
+.carte,
+.pastille,
+.bandeau,
+.onglets,
+.recherche,
+.dialogue {
+  isolation: isolate;
+  --image-flou: url("../img/fond-flou-carte.webp");
+}
+
+.pastille {
+  --image-flou: url("../img/fond-flou-pastille.webp");
+}
+
+/* Éléments dont addons.css fixait --flou-verre (20px, ou pastille). */
+#appli .carte-addon--installe,
+#appli .bandeau-maj {
+  --image-flou: url("../img/fond-flou-fort.webp");
+}
+
+#appli .catalogue .recherche {
+  --image-flou: url("../img/fond-flou-pastille.webp");
+}
+
+.onglets,
+.recherche {
+  --image-flou: url("../img/fond-flou-pastille.webp");
+}
+
+.carte::before,
+.pastille::before,
+.bandeau::before,
+.onglets::before,
+.recherche::before,
+.dialogue::before {
+  --marge-flou: 60px;
+  --rayon-verre: var(--rayon-carte);
+  --teinte-verre: var(--panneau);
+  --px: calc(var(--verre-x, 0px) + var(--marge-flou));
+  --py: calc(var(--verre-y, 0px) + var(--marge-flou));
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: calc(-1 * var(--marge-flou));
+  clip-path: inset(var(--marge-flou) round var(--rayon-verre));
+  background-image:
+    linear-gradient(var(--teinte-verre), var(--teinte-verre)),
+    var(--voile-haut),
+    var(--voile-bas),
+    var(--voile-teinte),
+    var(--image-flou);
+  background-repeat: no-repeat;
+  background-size:
+    100% 100%,
+    var(--fenetre-l, 1100px) var(--fenetre-h, 680px),
+    var(--fenetre-l, 1100px) var(--fenetre-h, 680px),
+    var(--fenetre-l, 1100px) var(--fenetre-h, 680px),
+    var(--fond-l, 1100px) var(--fond-h, 680px);
+  background-position:
+    0 0,
+    var(--px) var(--py),
+    var(--px) var(--py),
+    var(--px) var(--py),
+    calc(var(--px) + var(--fond-dx, 0px)) calc(var(--py) + var(--fond-dy, 0px));
+  pointer-events: none;
+}
+
+/* Carte à défilement interne : la couche de verre est fixe (fenêtre), pour ne
+   pas défiler avec le contenu de la carte. */
+.defilante::before,
+.dialogue::before {
+  position: fixed;
+  inset: auto;
+  top: calc(var(--verre-top, 0px) - var(--marge-flou));
+  left: calc(var(--verre-left, 0px) - var(--marge-flou));
+  width: calc(var(--verre-w, 0px) + 2 * var(--marge-flou));
+  height: calc(var(--verre-h, 0px) + 2 * var(--marge-flou));
+}
+
+.pastille::before {
+  --rayon-verre: 20px;
+  --flou-verre: var(--flou-pastille);
+}
+
+.onglets::before,
+.recherche::before {
+  --rayon-verre: var(--rayon-champ);
+}
+
+.dialogue::before {
+  --teinte-verre: var(--panneau-fort);
+}
+
+.bandeau::before {
+  --rayon-verre: var(--rayon-champ);
+  --teinte-verre: var(--panneau-fort);
+}
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--bouton-contour);
+  border-radius: var(--rayon-bouton);
+  background: var(--bouton-fond);
+  color: var(--texte);
+  font-size: var(--taille-texte);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.bouton:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.bouton:disabled {
+  color: var(--texte-2);
+  opacity: 0.55;
+}
+
+.bouton.petit {
+  height: 32px;
+  padding: 0 12px;
+  font-size: var(--taille-petit);
+}
+
+.bouton.carre {
+  width: 32px;
+  padding: 0;
+}
+
+.bouton .icone {
+  font-size: var(--taille-petit);
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: var(--taille-petit);
+  color: var(--texte-2);
+}
+
+.champ-saisie {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.champ-saisie input {
+  width: 100%;
+  height: 44px;
+  padding: 0 44px 0 16px;
+  border: 1px solid var(--contour);
+  border-radius: var(--rayon-champ);
+  background: rgba(8, 12, 20, 0.55);
+  color: var(--texte);
+  font-size: var(--taille-moyen);
+}
+
+.champ-saisie input::placeholder {
+  color: var(--texte-2);
+}
+
+.champ-saisie input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.champ-saisie .oeil {
+  position: absolute;
+  right: 6px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  color: var(--texte-2);
+  font-size: var(--taille-sous-titre);
+}
+
+.case {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  appearance: none;
+  display: inline-grid;
+  place-items: center;
+  margin: 0;
+  border: 1.5px solid var(--accent);
+  border-radius: 5px;
+  background: rgba(111, 180, 232, 0.12);
+  cursor: pointer;
+}
+
+.case:checked,
+.case:indeterminate {
+  background: var(--accent-piste);
+}
+
+.case:checked::after {
+  content: "";
+  width: 9px;
+  height: 5px;
+  margin-top: -2px;
+  border: solid var(--texte);
+  border-width: 0 0 2px 2px;
+  transform: rotate(-45deg);
+}
+
+.case:indeterminate::after {
+  content: "";
+  width: 8px;
+  height: 2px;
+  background: var(--texte);
+}
+
+.progression {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-forte);
+  overflow: hidden;
+}
+
+.progression > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: var(--taille-petit);
+  color: var(--texte-2);
+}
+
+.note .icone {
+  margin-top: 1px;
+  font-size: var(--taille-moyen);
+}
+
+.texte-2 {
+  color: var(--texte-2);
+}
+
+.ecran .titre {
+  position: absolute;
+  left: var(--marge);
+  top: var(--ecran-titre-haut);
+}
+
+.ecran h1 {
+  font-size: var(--taille-titre);
+  font-weight: 600;
+  line-height: 36px;
+}
+
+.ecran .sous-titre {
+  margin-top: 2px;
+  font-size: var(--taille-texte);
+  color: var(--texte-2);
+}
+
+.ecran h2 {
+  font-size: var(--taille-fort);
+  font-weight: 600;
+}
+
+.texte-coupe {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.secondaire {
+  color: var(--texte-2);
+}
+
+.message-liste {
+  padding: 24px;
+  color: var(--texte-2);
+  font-size: var(--taille-moyen);
+  text-align: center;
+}
+
+.zone-liste .message-liste {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.barre-outils {
+  position: absolute;
+  left: var(--marge);
+  right: var(--marge);
+  top: var(--ecran-barre-haut);
+  height: var(--hauteur-barre);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.barre-outils .outils {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.onglets {
+  display: flex;
+  height: var(--hauteur-barre);
+  border: 1px solid var(--contour);
+  border-radius: var(--rayon-champ);
+  background: transparent;
+}
+
+.onglet {
+  width: 120px;
+  border: 1px solid transparent;
+  border-radius: var(--rayon-champ);
+  background: none;
+  color: var(--texte-2);
+  font-size: var(--taille-moyen);
+  font-weight: 600;
+  margin: -1px;
+}
+
+.onglet[aria-selected="true"] {
+  border-color: var(--bouton-contour);
+  background: var(--surface-forte);
+  color: var(--texte);
+}
+
+.bascule {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--texte-2);
+  font-size: var(--taille-texte);
+}
+
+.recherche {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 280px;
+  height: var(--hauteur-barre);
+  border: 1px solid var(--contour);
+  border-radius: var(--rayon-champ);
+  background: transparent;
+  color: var(--texte-2);
+}
+
+.recherche .icone {
+  position: absolute;
+  left: 14px;
+  font-size: var(--taille-sous-titre);
+}
+
+.recherche input {
+  width: 100%;
+  height: 100%;
+  padding: 0 14px 0 44px;
+  border: 0;
+  border-radius: var(--rayon-champ);
+  background: none;
+  color: var(--texte);
+  font-size: var(--taille-moyen);
+}
+
+.recherche input::placeholder {
+  color: var(--texte-2);
+}
+
+.recherche:focus-within {
+  border-color: var(--accent);
+}
+
+.recherche input:focus-visible {
+  outline: none;
+}
+
+.tableau {
+  position: absolute;
+  left: var(--marge);
+  right: var(--marge);
+  top: var(--ecran-carte-haut);
+  bottom: var(--ecran-bas);
+  display: flex;
+  flex-direction: column;
+}
+
+.tableau .ligne {
+  display: grid;
+  align-items: center;
+  padding: 0 var(--marge-interne);
+}
+
+.tableau .entetes {
+  flex: none;
+  height: var(--entete-tableau);
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--contour);
+  color: var(--texte-2);
+  font-size: var(--taille-petit);
+}
+
+.zone-liste {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.liste-defilante {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bouton-contour) transparent;
+}
+
+.pied-tableau {
+  flex: none;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--marge-interne);
+  border-top: 1px solid var(--contour);
+  color: var(--texte-2);
+  font-size: var(--taille-petit);
+}
+
+.tableau > .alerte-note {
+  flex: none;
+  padding: 10px var(--marge-interne);
+  border-bottom: 1px solid var(--contour);
+  color: var(--erreur);
+}
+
+.pastille-etat,
+.pastille-resultat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 80px;
+  height: 22px;
+  padding: 0 12px;
+  border: 1px solid var(--contour-fort);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--texte);
+  font-size: var(--taille-petit);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pastille-etat.ok::before,
+.pastille-resultat.ok::before {
+  content: "✓";
+  color: var(--accent);
+}
+
+.pastille-etat.alerte {
+  border-color: var(--erreur);
+}
+
+.pastille-resultat.erreur,
+.pastille-resultat.avertissement {
+  background: var(--surface-forte);
+}
+
+.pastille-etat.neutre,
+.pastille-resultat.attente {
+  border-color: var(--contour);
+  color: var(--texte-2);
+}

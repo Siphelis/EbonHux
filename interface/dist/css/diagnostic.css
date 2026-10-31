@@ -1,0 +1,218 @@
+.diagnostic .systeme {
+  position: absolute;
+  left: var(--marge);
+  right: var(--marge);
+  top: var(--ecran-barre-haut);
+  height: 71px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.diagnostic .cellule-systeme {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding-left: 20px;
+  border-left: 1px solid var(--contour);
+}
+
+.diagnostic .cellule-systeme:first-child {
+  padding-left: 24px;
+  border-left: 0;
+}
+
+.diagnostic .cellule-systeme .etiquette {
+  color: var(--texte-2);
+  font-size: var(--taille-petit);
+}
+
+.diagnostic .cellule-systeme strong {
+  font-size: var(--taille-fort);
+  font-weight: 600;
+}
+
+.diagnostic .legende-commun {
+  position: absolute;
+  left: var(--marge);
+  top: 286px;
+  color: var(--texte-2);
+  font-size: var(--taille-petit);
+}
+
+.diagnostic .journal {
+  position: absolute;
+  left: var(--marge);
+  right: var(--marge);
+  top: 308px;
+  bottom: var(--ecran-bas);
+  display: flex;
+  flex-direction: column;
+  padding: 7px var(--marge-interne) 12px;
+}
+
+.diagnostic .journal-tete {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: var(--hauteur-barre);
+}
+
+.diagnostic .journal-tete h2 {
+  font-size: var(--taille-sous-titre);
+  font-weight: 600;
+}
+
+.diagnostic .resume {
+  white-space: nowrap;
+}
+
+.diagnostic .resume,
+.diagnostic .note-rapport {
+  color: var(--texte-2);
+  font-size: var(--taille-petit);
+}
+
+.diagnostic .note-rapport {
+  margin-left: auto;
+}
+
+.diagnostic .journal-tete .bouton {
+  width: 216px;
+  height: var(--hauteur-barre);
+  font-size: var(--taille-fort);
+}
+
+.diagnostic .filtres {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.diagnostic .filtre {
+  min-width: 92px;
+  height: 28px;
+  padding: 0 18px;
+  border: 1px solid var(--bouton-contour);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: var(--taille-texte);
+  font-weight: 500;
+}
+
+.diagnostic .filtre[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-piste);
+}
+
+.diagnostic .ligne-journal {
+  width: 100%;
+  min-height: var(--ligne-journal);
+  padding: 0 12px;
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: none;
+  color: inherit;
+  font-size: var(--taille-moyen);
+  text-align: left;
+}
+
+.diagnostic .ligne-journal.colonnes-compte {
+  grid-template-columns: 84px 140px 1fr auto;
+}
+
+.diagnostic .ligne-journal.entetes {
+  width: calc(100% + 24px);
+  min-height: 20px;
+  margin: 5px -12px 0;
+  color: var(--texte-2);
+  font-size: var(--taille-petit);
+  grid-template-columns: 84px 1fr 104px;
+}
+
+.diagnostic .ligne-journal.entetes.colonnes-compte {
+  grid-template-columns: 84px 140px 1fr 104px;
+}
+
+.diagnostic .ligne-journal.entetes span:last-child {
+  text-align: center;
+}
+
+.diagnostic .zone-liste {
+  margin-top: 1px;
+}
+
+.diagnostic .heure {
+  color: var(--texte-2);
+  font-size: var(--taille-texte);
+  font-variant-numeric: tabular-nums;
+}
+
+.diagnostic .compte-journal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--taille-texte);
+}
+
+.diagnostic .compte-journal .avatar {
+  width: 20px;
+  height: 20px;
+  font-size: var(--taille-note);
+}
+
+.diagnostic .etape {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  padding-right: 16px;
+}
+
+.diagnostic .lignes-journal {
+  margin: 0 -12px;
+}
+
+.diagnostic .icone-erreur {
+  position: absolute;
+  left: -20px;
+  width: 14px;
+  height: 14px;
+}
+
+.diagnostic .ouvrable {
+  cursor: pointer;
+}
+
+.diagnostic .entree.erreur .etape,
+.diagnostic .entree.erreur .heure {
+  color: var(--texte);
+  font-weight: 600;
+}
+
+.diagnostic .entree.ouverte .ouvrable {
+  border-color: var(--bouton-contour);
+}
+
+.diagnostic .detail-journal {
+  margin: 0;
+  padding: 4px 12px 8px 240px;
+  color: var(--texte);
+  font: inherit;
+  font-size: var(--taille-petit);
+  line-height: 1.2;
+  white-space: pre-wrap;
+}
+
+.diagnostic .pastille-resultat {
+  min-width: 104px;
+  height: 22px;
+}
+
+.diagnostic .entree:has(.pastille-resultat.attente) .etape {
+  color: var(--texte-2);
+}

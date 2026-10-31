@@ -1,0 +1,17 @@
+[package]
+name = "ebonhux-service"
+edition.workspace = true
+version.workspace = true
+
+[lib]
+name = "ebonhux_service"
+path = "src/lib.rs"
+
+[dependencies]
+ebonhux-coeur = { path = "../coeur" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+time = { version = "0.3", features = ["formatting", "std"] }
+
+[dev-dependencies]
+tempfile = "3"

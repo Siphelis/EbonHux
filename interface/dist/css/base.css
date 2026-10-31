@@ -1,0 +1,430 @@
+@import url("addons.css");
+@import url("langue.css");
+@import url("diagnostic.css");
+
+:root {
+  --panneau: rgba(12, 17, 27, 0.66);
+  --panneau-fort: rgba(12, 17, 27, 0.88);
+  --rail-fond: rgba(10, 14, 22, 0.94);
+  --contour: rgba(120, 170, 255, 0.2);
+  --contour-fort: rgba(120, 170, 255, 0.4);
+  --texte: #eaf4ff;
+  --texte-2: #8fa3c4;
+  --accent: #6fb4e8;
+  --accent-piste: rgba(111, 180, 232, 0.5);
+  --erreur: #f2877f;
+  --nuit: #080c14;
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-forte: rgba(255, 255, 255, 0.1);
+  --bouton-fond: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+  --bouton-contour: rgba(255, 255, 255, 0.3);
+  --avatar-fond: linear-gradient(145deg, #b5cde6, #5f7fa3);
+  --avatar-fond-terne: linear-gradient(145deg, #7d8fa6, #3f4f66);
+  --ombre-carte: 0 12px 40px rgba(0, 0, 0, 0.35);
+
+  --flou-carte: 12px;
+  --flou-pastille: 8px;
+  --voile-haut: radial-gradient(ellipse at 60% 40%, transparent 35%, rgba(5, 8, 14, 0.7) 100%);
+  --voile-bas: linear-gradient(180deg, rgba(5, 8, 14, 0.42) 0%, rgba(5, 8, 14, 0.42) 55%, rgba(5, 8, 14, 0.8) 100%);
+  --voile-teinte: linear-gradient(transparent, transparent);
+
+  --police: "Inter", system-ui, sans-serif;
+  --taille-note: 11px;
+  --taille-petit: 12px;
+  --taille-texte: 13px;
+  --taille-moyen: 14px;
+  --taille-fort: 15px;
+  --taille-sous-titre: 18px;
+  --taille-titre: 26px;
+
+  --rail-largeur: 80px;
+  --flamme-coeur: 225, 243, 255;
+  --flamme-cyan: 70, 215, 255;
+  --flamme-bleu: 25, 80, 230;
+  --marge: 32px;
+  --rayon-carte: 16px;
+  --rayon-bouton: 10px;
+  --rayon-champ: 12px;
+  --duree-vue: 180ms;
+  --icone: 30px;
+  --taille-jouer: 17px;
+  --ecran-titre-haut: 134px;
+  --ecran-barre-haut: 208px;
+  --ecran-carte-haut: 265px;
+  --ecran-bas: 64px;
+  --marge-interne: 23px;
+  --entete-tableau: 38px;
+  --ligne-tableau: 48px;
+  --ligne-module: 32px;
+  --ligne-catalogue: 64px;
+  --ligne-journal: 26px;
+  --hauteur-barre: 40px;
+
+  --interrupteur-largeur: 56px;
+  --interrupteur-hauteur: 30px;
+  --interrupteur-pas: 3px;
+  --duree-activation: 480ms;
+  --duree-desactivation: 360ms;
+  --delai-activation: 80ms;
+  --delai-desactivation: 120ms;
+  --duree-mouvement-reduit: 120ms;
+  --ressort: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-display: swap;
+  src: url("../polices/Inter-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 500;
+  font-display: swap;
+  src: url("../polices/Inter-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 600;
+  font-display: swap;
+  src: url("../polices/Inter-600.woff2") format("woff2");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--nuit);
+  color: var(--texte);
+  font-family: var(--police);
+  font-size: var(--taille-texte);
+  overflow: hidden;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+#appli {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.fond {
+  position: absolute;
+  inset: 0;
+  background: url("../img/fond.webp") center / cover no-repeat;
+}
+
+.voile {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 60% 40%, transparent 35%, rgba(5, 8, 14, 0.7) 100%),
+    linear-gradient(180deg, rgba(5, 8, 14, 0.42) 0%, rgba(5, 8, 14, 0.42) 55%, rgba(5, 8, 14, 0.8) 100%);
+  transition: background-color var(--duree-vue);
+}
+
+#appli[data-ecran]:not([data-ecran="jouer"]) {
+  --voile-teinte: linear-gradient(rgba(5, 8, 14, 0.2), rgba(5, 8, 14, 0.2));
+}
+
+#appli[data-ecran]:not([data-ecran="jouer"]) .voile {
+  background-color: rgba(5, 8, 14, 0.2);
+}
+
+.rail {
+  position: absolute;
+  z-index: 2;
+  inset: 0 auto 0 0;
+  width: var(--rail-largeur);
+  background: var(--rail-fond);
+  border-right: 1px solid var(--contour);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rail-haut,
+.rail-bas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.rail-haut {
+  padding-top: 16px;
+}
+
+.rail-bas {
+  margin-top: auto;
+  padding-bottom: 49px;
+  gap: 24px;
+}
+
+.rail-embleme {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  background: none;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.rail-crane {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.rail-crane img {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.rail-flammes {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.rail-bouton {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--rayon-champ);
+  background: none;
+  color: var(--texte-2);
+}
+
+.rail-bouton:hover {
+  color: var(--texte);
+}
+
+.rail-bouton[aria-current="page"] {
+  color: var(--texte);
+  background: var(--surface-forte);
+  border-color: var(--bouton-contour);
+}
+
+.rail-bouton[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  left: calc(-16px - 1px);
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent);
+}
+
+.rail-bouton .icone {
+  width: var(--icone);
+  height: var(--icone);
+}
+
+.rail-langue {
+  font-size: var(--taille-note);
+  font-weight: 600;
+  border: 1.5px solid currentColor;
+  border-radius: 5px;
+  padding: 1px 5px;
+  line-height: 1.3;
+}
+
+.icone {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  fill: currentColor;
+  stroke: none;
+}
+
+.icone.trait {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.logo {
+  position: absolute;
+  left: calc(var(--rail-largeur) + 24px);
+  top: 9px;
+  width: 200px;
+  pointer-events: none;
+}
+
+.pied {
+  position: absolute;
+  left: calc(var(--rail-largeur) + var(--marge));
+  bottom: 24px;
+  font-size: var(--taille-petit);
+  color: var(--texte-2);
+}
+
+#vue {
+  position: absolute;
+  inset: 0 0 0 var(--rail-largeur);
+}
+
+#vue:focus,
+#vue h1:focus {
+  outline: none;
+}
+
+.pastille {
+  position: absolute;
+  top: 24px;
+  right: var(--marge);
+  height: 40px;
+  min-width: 228px;
+  padding: 0 14px 0 7px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--contour);
+  border-radius: 20px;
+  font-size: var(--taille-moyen);
+  font-weight: 500;
+}
+
+.pastille .nom {
+  flex: 1;
+}
+
+.pastille .verrou,
+.pastille .chevron {
+  color: var(--texte-2);
+  font-size: var(--taille-sous-titre);
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--avatar-fond);
+  color: var(--nuit);
+  font-size: var(--taille-petit);
+  font-weight: 600;
+}
+
+.avatar.terne {
+  background: var(--avatar-fond-terne);
+  color: var(--texte);
+  opacity: 0.85;
+}
+
+.avatars {
+  display: flex;
+}
+
+.avatars .avatar + .avatar {
+  margin-left: -8px;
+  outline: 2px solid rgba(12, 17, 27, 0.9);
+}
+
+.point {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px;
+  border: 1px solid var(--bouton-contour);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: var(--taille-note);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.bandeau {
+  position: absolute;
+  left: calc(var(--rail-largeur) + var(--marge));
+  right: var(--marge);
+  bottom: 8px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--contour-fort);
+  border-radius: var(--rayon-champ);
+  font-size: var(--taille-texte);
+}
+
+.bandeau-erreur {
+  border-color: var(--erreur);
+}
+
+.bandeau-succes {
+  border-color: var(--accent);
+}
+
+.bandeau .message {
+  flex: 1;
+}
+
+.bandeau button {
+  border: 0;
+  background: none;
+  color: var(--texte-2);
+  font-size: var(--taille-moyen);
+}
+
+.icone .coche-bouclier,
+.coche-bouclier {
+  fill: none;
+  stroke: var(--nuit);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

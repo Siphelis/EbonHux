@@ -1,0 +1,1 @@
+{"defaut":{"identifier":"defaut","description":"Capacité minimale de la fenêtre principale","local":true,"windows":["principale"],"permissions":["core:default","dialog:allow-open"]}}

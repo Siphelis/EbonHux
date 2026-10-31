@@ -8,4 +8,4 @@ node_modules/
 .vscode/
 outils/
 Thumbs.db
-.DS_Store
+.DS_Storetarget/

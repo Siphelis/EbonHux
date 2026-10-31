@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "EbonHux",
+  "version": "0.0.0",
+  "identifier": "app.ebonhux.launcher",
+  "mainBinaryName": "ebonhux-launcher",
+  "build": {
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "principale",
+        "title": "EbonHux",
+        "width": 1100,
+        "height": 680,
+        "resizable": false,
+        "center": true,
+        "decorations": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https://launcher.way-of-elendil.fr; font-src 'self'; connect-src ipc: http://ipc.localhost; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["appimage"],
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/256x256.png", "icons/icon.png"],
+    "category": "Game",
+    "shortDescription": "Lanceur de World of Warcraft pour Linux",
+    "longDescription": "EbonHux prépare et lance World of Warcraft sous Linux : comptes, addons et préparation du jeu (Wine et DXVK) dans une seule fenêtre.",
+    "linux": {
+      "appimage": {
+        "bundleMediaFramework": false
+      }
+    }
+  }
+}
